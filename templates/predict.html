@@ -1,0 +1,168 @@
+{% extends 'base.html' %}
+
+{% block title %}Faire une Prédiction{% endblock %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto bg-white p-8 rounded-xl shadow-lg dark:bg-gray-800 dark:text-gray-100">
+    <h1 class="text-3xl font-bold text-center text-gray-800 dark:text-gray-100 mb-6">Prédiction de la note finale (G3)</h1>
+    <p class="text-center text-gray-600 dark:text-gray-300 mb-8">Remplissez les champs ci-dessous ou téléversez un fichier pour obtenir une estimation de la note finale (G3) et des conseils personnalisés.</p>
+
+    <form id="prediction-form" class="space-y-6" enctype="multipart/form-data">
+        
+        <div>
+            <label for="file" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Téléverser un fichier (CSV ou Excel)</label>
+            <input type="file" id="file" name="file" accept=".csv, .xlsx" class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-orange-50 file:text-orange-700 hover:file:bg-orange-100 dark:file:bg-gray-700 dark:file:text-gray-300 dark:hover:file:bg-gray-600">
+        </div>
+
+        <div class="text-center text-gray-500 dark:text-gray-400 my-4">OU</div>
+
+        <div>
+            <label for="sex" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Sexe de l'étudiant</label>
+            <select id="sex" name="sex" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200">
+                <option value="M">Masculin</option>
+                <option value="F">Féminin</option>
+            </select>
+        </div>
+
+        <div>
+            <label for="studytime" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Temps d'étude hebdomadaire (en heures)</label>
+            <input type="number" id="studytime" name="studytime" min="1" max="10" class="mt-1 block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200">
+        </div>
+
+        <div>
+            <label for="higher" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Souhaite poursuivre des études supérieures ?</label>
+            <select id="higher" name="higher" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200">
+                <option value="yes">Oui</option>
+                <option value="no">Non</option>
+            </select>
+        </div>
+
+        <div>
+            <label for="internet" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Accès à Internet à la maison ?</label>
+            <select id="internet" name="internet" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200">
+                <option value="yes">Oui</option>
+                <option value="no">Non</option>
+            </select>
+        </div>
+
+        <div>
+            <label for="Medu" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Niveau d'éducation de la mère</label>
+            <select id="Medu" name="Medu" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200">
+                <option value="0">Aucun</option>
+                <option value="1">Primaire</option>
+                <option value="2">Collège</option>
+                <option value="3">Lycée</option>
+                <option value="4">Études supérieures</option>
+            </select>
+        </div>
+
+        <div>
+            <label for="G1" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Note du premier trimestre (G1)</label>
+            <input type="number" id="G1" name="G1" min="0" max="20" class="mt-1 block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200">
+        </div>
+
+        <div>
+            <label for="G2" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Note du deuxième trimestre (G2)</label>
+            <input type="number" id="G2" name="G2" min="0" max="20" class="mt-1 block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200">
+        </div>
+
+        <div class="text-center pt-4">
+            <button type="submit" class="w-full bg-orange-600 text-white font-bold py-3 px-6 rounded-full hover:bg-orange-700 transition duration-300 ease-in-out transform hover:scale-105">
+                Obtenir la prédiction
+            </button>
+        </div>
+    </form>
+
+</div>
+
+<!-- Modal pour les résultats de prédiction -->
+<div id="prediction-modal" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full hidden">
+    <div class="relative top-20 mx-auto p-5 border w-11/12 md:max-w-2xl shadow-lg rounded-md bg-white dark:bg-gray-700 dark:border-gray-600">
+        <div class="text-right">
+            <button id="close-modal" class="text-gray-400 hover:text-gray-600 text-2xl font-bold dark:text-gray-300 dark:hover:text-gray-100">&times;</button>
+        </div>
+        <div class="mt-3 text-center">
+            <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-4">Résultat de la Prédiction</h2>
+            <p class="text-5xl font-extrabold text-orange-600" id="prediction-output"></p>
+            <p class="mt-4 text-lg text-gray-700 dark:text-gray-200" id="detailed-interpretation-output"></p>
+            <div id="improvement-suggestions-output" class="mt-6 text-left">
+                <h3 class="text-xl font-semibold text-gray-800 dark:text-gray-100 mb-2">Pistes d'amélioration:</h3>
+                <ul class="list-disc list-inside text-gray-700 dark:text-gray-200">
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.getElementById('prediction-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const formData = new FormData(this);
+
+    fetch('{{ url_for("predict") }}', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(result => {
+        if (result.error) {
+            alert('Erreur: ' + result.error);
+        } else {
+            const modal = document.getElementById('prediction-modal');
+            const predictionOutput = document.getElementById('prediction-output');
+            const detailedInterpretationOutput = document.getElementById('detailed-interpretation-output');
+            const suggestionsList = document.querySelector('#improvement-suggestions-output ul');
+            
+            predictionOutput.innerHTML = '';
+            detailedInterpretationOutput.innerHTML = '';
+            suggestionsList.innerHTML = '';
+
+            if (Array.isArray(result)) {
+                // Handle multiple predictions
+                predictionOutput.innerHTML = 'Résultats pour le fichier téléversé';
+                result.forEach((prediction, index) => {
+                    const resultDiv = document.createElement('div');
+                    resultDiv.classList.add('mb-4', 'p-4', 'border', 'rounded-lg');
+                    resultDiv.innerHTML = `
+                        <h4 class="font-bold">Prédiction ${index + 1}: ${prediction.prediction}</h4>
+                        <p>${prediction.detailed_interpretation}</p>
+                        <ul class="list-disc list-inside">
+                            ${prediction.improvement_suggestions.map(s => `<li>${s}</li>`).join('')}
+                        </ul>
+                    `;
+                    detailedInterpretationOutput.appendChild(resultDiv);
+                });
+            } else {
+                // Handle single prediction
+                predictionOutput.textContent = result.prediction;
+                detailedInterpretationOutput.textContent = result.detailed_interpretation;
+                result.improvement_suggestions.forEach(suggestion => {
+                    const listItem = document.createElement('li');
+                    listItem.textContent = suggestion;
+                    suggestionsList.appendChild(listItem);
+                });
+            }
+
+            modal.classList.remove('hidden');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Une erreur est survenue lors de la communication avec le serveur.');
+    });
+});
+
+document.getElementById('close-modal').addEventListener('click', function() {
+    document.getElementById('prediction-modal').classList.add('hidden');
+});
+
+// Fermer la modale si l'utilisateur clique en dehors de son contenu
+window.addEventListener('click', function(event) {
+    const modal = document.getElementById('prediction-modal');
+    if (event.target == modal) {
+        modal.classList.add('hidden');
+    }
+});
+</script>
+{% endblock %}

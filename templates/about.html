@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block title %}À Propos - ScolarPredict{% endblock %}
+
+{% block content %}
+<div class="bg-white p-10 rounded-xl shadow-lg dark:bg-gray-800 dark:text-gray-100">
+    <h1 class="text-4xl font-extrabold text-center text-gray-800 dark:text-gray-100 mb-6">À Propos de ScolarPredict</h1>
+    
+    <div class="space-y-8 text-lg text-gray-700 dark:text-gray-200 leading-relaxed">
+        <p>
+            <strong>ScolarPredict</strong> est un système intelligent conçu pour la <strong>prédiction de la note du troisième trimestre (G3) et l'identification précoce des étudiants à risque</strong>. Ce projet s'inscrit dans le cadre d'une certification en Intelligence Artificielle et Data Science, visant à démontrer l'application concrète des techniques de Machine Learning pour améliorer le suivi pédagogique et la réussite scolaire.
+        </p>
+
+        <div>
+            <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-3">Description Détaillée de l'Application</h2>
+            <p>
+                ScolarPredict offre une interface conviviale permettant aux utilisateurs (éducateurs, parents) de saisir des informations clés concernant un étudiant. Ces données sont ensuite traitées par un modèle de Machine Learning entraîné pour estimer la note finale du troisième trimestre. Au-delà de la simple prédiction numérique, l'application fournit une interprétation qualitative du résultat, signalant si l'étudiant est sur la bonne voie, s'il a de solides acquis, ou s'il nécessite un suivi pédagogique particulier pour éviter le décrochage. L'objectif est de transformer les données en informations exploitables pour une intervention rapide et ciblée.
+            </p>
+        </div>
+
+        <div>
+            <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-3">Historique du Projet</h2>
+            <p>
+                Le projet ScolarPredict a débuté par une phase d'exploration des données académiques disponibles, suivie d'une étape cruciale de prétraitement et d'ingénierie des fonctionnalités. Plusieurs algorithmes de Machine Learning ont été expérimentés et évalués pour identifier le modèle le plus performant et le plus robuste pour la tâche de prédiction. L'intégration du modèle dans une application web Flask a permis de rendre cette solution accessible et interactive. Le développement a mis l'accent sur la clarté de l'interface utilisateur (grâce à Tailwind CSS) et la fiabilité des prédictions, tout en assurant une interprétation pédagogique des résultats.
+            </p>
+        </div>
+
+        <div>
+            <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-3">Notre Technologie</h2>
+            <p>
+                L'application est construite avec le framework web <strong class="text-orange-600">Flask</strong> pour le backend, et utilise une interface utilisateur moderne conçue avec <strong class="text-teal-500">Tailwind CSS</strong>. Le cœur de notre service est un modèle de prédiction entraîné sur un ensemble de données d'étudiants, capable d'estimer la note finale (G3) avec une précision significative.
+            </p>
+        </div>
+
+        <div>
+            <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-3">Comment les prédictions sont-elles faites ?</h2>
+            <p>
+                Le modèle prend en compte plusieurs facteurs, notamment :
+            </p>
+            <ul class="list-disc list-inside mt-2 pl-4 space-y-1">
+                <li>Le temps d'étude hebdomadaire.</li>
+                <li>L'aspiration à poursuivre des études supérieures.</li>
+                <li>L'accès à Internet.</li>
+                <li>Le niveau d'éducation des parents.</li>
+                <li>Les notes obtenues lors des trimestres précédents (G1 et G2).</li>
+            </ul>
+            <p class="mt-3">
+                Ces informations nous permettent de dresser un profil de l'étudiant et de prédire sa trajectoire académique, tout en fournissant des interprétations pour guider les actions pédagogiques.
+            </p>
+        </div>
+
+        <div class="text-center pt-6">
+            <p class="text-gray-500 italic dark:text-gray-400">
+                Ce projet est à but non lucratif et purement démonstratif.
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}

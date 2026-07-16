@@ -1,0 +1,21 @@
+[
+    {
+        "timestamp": "2025-07-18 09:48:42",
+        "input_data": {
+            "sex": "F",
+            "studytime": "9",
+            "higher": "yes",
+            "internet": "yes",
+            "Medu": "4",
+            "G1": "14",
+            "G2": "13"
+        },
+        "predicted_g3": 12.25,
+        "detailed_interpretation": "Bonnes performances. L'\u00e9tudiant a de solides acquis et une base stable. Il montre une bonne capacit\u00e9 \u00e0 assimiler les informations, mais il y a encore une marge de progression pour atteindre l'excellence.",
+        "improvement_suggestions": [
+            "Identifier les mati\u00e8res o\u00f9 des efforts suppl\u00e9mentaires pourraient \u00eatre b\u00e9n\u00e9fiques.",
+            "Revoir r\u00e9guli\u00e8rement les notions cl\u00e9s et pratiquer des exercices vari\u00e9s.",
+            "Optimiser le temps d'\u00e9tude en se concentrant sur les points faibles."
+        ]
+    }
+]

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prédiction de Performance Académique</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="text-center my-4">
+        <img src="{{ url_for('static', filename='education.jpg') }}" alt="Éducation" class="img-fluid rounded shadow" style="max-width: 400px;">
+    </div>
+    <nav class="navbar navbar-expand-lg navbar-light bg-white">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <svg viewBox="0 0 1000 1000" role="presentation" aria-hidden="true" focusable="false" style="height: 2em; width: 2em; fill: currentcolor;"><path d="m499.3 736.7c-51-64-81-120.1-91-168.1-10-39-6-70 11-93 18-21 41-35 67-35 27 0 52 13 73 38 21 25 32 57 32 94 0 33-10 64-31 98-21 34-50 69-81 101zm435.7 25.3c0-12-10-22-22-22s-22 10-22 22v22c0 12 10 22 22 22s22-10 22-22zm-871.4 0c0-12-10-22-22-22s-22 10-22 22v22c0 12 10 22 22 22s22-10 22-22zm893.4-25.3c0-12-10-22-22-22s-22 10-22 22v22c0 12 10 22 22 22s22-10 22-22zm-871.4 0c0-12-10-22-22-22s-22 10-22 22v22c0 12 10 22 22 22s22-10 22-22zm-22-22v-22c0-12-10-22-22-22s-22 10-22 22v22c0 12 10 22 22 22s22-10 22-22zm893.4 0v-22c0-12-10-22-22-22s-22 10-22 22v22c0 12 10 22 22 22s22-10 22-22z"></path></svg>
+                Student Performance
+            </a>
+        </div>
+    </nav>
+
+    <div class="container my-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h1>Estimez la note finale de l'étudiant</h1>
+                    </div>
+                    <div class="card-body">
+                        <form id="prediction-form">
+                            <div class="row">
+                                <!-- Colonne de Gauche -->
+                                <div class="col-md-6 mb-3">
+                                    <label for="sex" class="form-label">Sexe</label>
+                                    <select class="form-select" id="sex" name="sex" required>
+                                        <option value="F">Féminin</option>
+                                        <option value="M">Masculin</option>
+                                    </select>
+                                </div>
+                                <!-- Colonne de Droite -->
+                                <div class="col-md-6 mb-3">
+                                    <label for="studytime" class="form-label">Temps d'étude</label>
+                                    <select class="form-select" id="studytime" name="studytime" required>
+                                        <option value="1">&lt; 2 heures/semaine</option>
+                                        <option value="2">2 à 5 heures/semaine</option>
+                                        <option value="3">5 à 10 heures/semaine</option>
+                                        <option value="4">&gt; 10 heures/semaine</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="Medu" class="form-label">Éducation de la mère</label>
+                                    <select class="form-select" id="Medu" name="Medu" required>
+                                        <option value="0">Aucune</option>
+                                        <option value="1">Primaire</option>
+                                        <option value="2">Secondaire</option>
+                                        <option value="3">Lycée</option>
+                                        <option value="4">Supérieur</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label d-block">Études supérieures ?</label>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="higher" id="higher-yes" value="yes" checked>
+                                        <label class="form-check-label" for="higher-yes">Oui</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="higher" id="higher-no" value="no">
+                                        <label class="form-check-label" for="higher-no">Non</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label d-block">Accès Internet</label>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="internet" id="internet-yes" value="yes" checked>
+                                        <label class="form-check-label" for="internet-yes">Oui</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="internet" id="internet-no" value="no">
+                                        <label class="form-check-label" for="internet-no">Non</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <hr class="my-4">
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="G1" class="form-label">Note du 1er trimestre (G1)</label>
+                                    <input type="number" class="form-control" id="G1" name="G1" min="0" max="20" required placeholder="Note sur 20">
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="G2" class="form-label">Note du 2ème trimestre (G2)</label>
+                                    <input type="number" class="form-control" id="G2" name="G2" min="0" max="20" required placeholder="Note sur 20">
+                                </div>
+                            </div>
+
+                            <div class="d-grid mt-4">
+                                <button type="submit" class="btn btn-primary">Prédire la Note Finale (G3)</button>
+                            </div>
+                        </form>
+
+                        <div id="result" class="mt-4 text-center" style="display: none;">
+                            <div class="alert alert-success">
+                                <h4 id="prediction_text"></h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,133 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap');
+
+:root {
+    --airbnb-pink: #FF5A5F;
+    --dark-gray: #484848;
+    --light-gray: #f7f7f7;
+    --border-gray: #dddddd;
+    --white: #FFFFFF;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: var(--white);
+    color: var(--dark-gray);
+    background-image: linear-gradient(rgba(255,255,255,0.85), rgba(255,255,255,0.85)), url('../education.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+.navbar {
+    background-color: var(--white);
+    border-bottom: 1px solid var(--border-gray);
+    padding: 1rem 2rem;
+}
+
+.navbar-brand {
+    font-weight: 700;
+    color: var(--airbnb-pink);
+}
+
+.nav-link {
+    color: var(--dark-gray);
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.nav-link.active, .nav-link:hover {
+    color: var(--airbnb-pink);
+}
+
+#content {
+    padding: 3rem 2rem;
+}
+
+.card {
+    border: 1px solid var(--border-gray);
+    border-radius: 12px;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+}
+
+.btn-primary {
+    background-color: var(--airbnb-pink);
+    border-color: var(--airbnb-pink);
+    border-radius: 8px;
+    padding: 0.75rem 1.5rem;
+    font-weight: 700;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.18);
+    background-color: #E61E4D;
+    border-color: #E61E4D;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: var(--airbnb-pink);
+    box-shadow: 0 0 0 0.25rem rgba(255, 90, 95, 0.25);
+}
+
+/* Prédiction : disposition formulaire et image */
+.image-aside {
+    min-height: 350px;
+    max-height: 600px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+}
+.form-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    min-height: 350px;
+    padding: 0;
+}
+@media (max-width: 768px) {
+    .image-aside, .form-section {
+        max-height: none;
+        min-height: unset;
+        margin-bottom: 2rem;
+    }
+}
+
+/* Page d'accueil */
+.welcome-section {
+    text-align: center;
+    padding: 4rem 0;
+}
+
+.welcome-section h1 {
+    font-size: 3rem;
+    font-weight: 700;
+}
+
+/* Result Card */
+.grade-display {
+    font-size: 4rem;
+    font-weight: 700;
+    color: var(--airbnb-pink);
+}
+
+.gauge-container {
+    height: 10px;
+    background: #e9ecef;
+    border-radius: 5px;
+    overflow: hidden;
+    margin: 1rem 0;
+}
+
+.gauge-bar {
+    height: 100%;
+    background: var(--airbnb-pink);
+    width: 0%;
+    transition: width 0.5s ease-in-out;
+    border-radius: 5px;
+}

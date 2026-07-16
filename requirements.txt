@@ -1,0 +1,11 @@
+Flask
+numpy
+scikit-learn
+pandas
+openpyxl
+matplotlib
+seaborn
+SQLAlchemy
+plotly
+dash 
+dash-bootstrap-components

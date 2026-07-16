@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+
+{% block title %}Historique des Prédictions - ScolarPredict{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto bg-white p-8 rounded-xl shadow-lg dark:bg-gray-800 dark:text-gray-100">
+    <h1 class="text-3xl font-bold text-center text-gray-800 dark:text-gray-100 mb-8">Historique des Prédictions</h1>
+
+    <div class="flex justify-center space-x-4 mb-8">
+        <button id="card-view-btn" class="px-6 py-2 rounded-full bg-orange-600 text-white font-semibold hover:bg-orange-700 transition duration-300">Vue par Cartes</button>
+        <button id="table-view-btn" class="px-6 py-2 rounded-full bg-gray-200 text-gray-800 font-semibold hover:bg-gray-300 transition duration-300">Vue Tabulaire</button>
+    </div>
+
+    {% if history %}
+        <!-- Card View -->
+        <div id="card-view" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
+            {% for record in history %}
+            <div class="border border-gray-200 rounded-lg p-6 shadow-md bg-gray-50 hover:shadow-lg transition-shadow duration-300 dark:bg-gray-700 dark:border-gray-600">
+                <p class="text-sm text-gray-500 dark:text-gray-400 mb-2">Date: {{ record.timestamp }}</p>
+                <h2 class="text-2xl font-semibold text-orange-600 mb-4">Prédiction G3: {{ record.predicted_g3 }}</h2>
+                
+                <h3 class="text-xl font-semibold text-gray-800 dark:text-gray-100 mb-2">Interprétation Détaillée:</h3>
+                <p class="text-gray-700 dark:text-gray-200 mb-4">{{ record.detailed_interpretation }}</p>
+
+                <h3 class="text-xl font-semibold text-gray-800 dark:text-gray-100 mb-2">Pistes d'amélioration:</h3>
+                <ul class="list-disc list-inside text-gray-700 dark:text-gray-200 mb-4">
+                    {% for suggestion in record.improvement_suggestions %}
+                        <li>{{ suggestion }}</li>
+                    {% endfor %}
+                </ul>
+
+                <h3 class="text-xl font-semibold text-gray-800 dark:text-gray-100 mb-2">Données d'entrée:</h3>
+                <ul class="list-disc list-inside text-gray-700 dark:text-gray-200">
+                    <li>Sexe: {{ 'Masculin' if record.sex == 'M' else 'Féminin' }}</li>
+                    <li>Temps d'étude: {{ record.studytime }} heures/semaine</li>
+                    <li>Études supérieures: {{ 'Oui' if record.higher == 'yes' else 'Non' }}</li>
+                    <li>Accès Internet: {{ 'Oui' if record.internet == 'yes' else 'Non' }}</li>
+                    <li>Medu: {{ record.medu }}</li>
+                    <li>G1: {{ record.g1 }}</li>
+                    <li>G2: {{ record.g2 }}</li>
+                </ul>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Table View -->
+        <div id="table-view" class="hidden overflow-x-auto">
+            <table class="min-w-full bg-white border border-gray-200 rounded-lg shadow-md dark:bg-gray-700 dark:border-gray-600">
+                <thead>
+                    <tr class="bg-gray-100 text-left text-gray-600 uppercase text-sm leading-normal dark:bg-gray-600 dark:text-gray-200">
+                        <th class="py-3 px-6 border-b border-gray-200 dark:border-gray-500">Date</th>
+                        <th class="py-3 px-6 border-b border-gray-200 dark:border-gray-500">Sexe</th>
+                        <th class="py-3 px-6 border-b border-gray-200 dark:border-gray-500">Temps d'étude</th>
+                        <th class="py-3 px-6 border-b border-gray-200 dark:border-gray-500">G1</th>
+                        <th class="py-3 px-6 border-b border-gray-200 dark:border-gray-500">G2</th>
+                        <th class="py-3 px-6 border-b border-gray-200 dark:border-gray-500">Prédiction G3</th>
+                        <th class="py-3 px-6 border-b border-gray-200 dark:border-gray-500">Interprétation</th>
+                    </tr>
+                </thead>
+                <tbody class="text-gray-700 text-sm font-light dark:text-gray-200">
+                    {% for record in history %}
+                    <tr class="border-b border-gray-200 hover:bg-gray-50 dark:border-gray-600 dark:hover:bg-gray-600">
+                        <td class="py-3 px-6">{{ record.timestamp }}</td>
+                        <td class="py-3 px-6">{{ 'M' if record.sex == 'M' else 'F' }}</td>
+                        <td class="py-3 px-6">{{ record.studytime }}</td>
+                        <td class="py-3 px-6">{{ record.g1 }}</td>
+                        <td class="py-3 px-6">{{ record.g2 }}</td>
+                        <td class="py-3 px-6 font-semibold text-orange-600">{{ record.predicted_g3 }}</td>
+                        <td class="py-3 px-6">{{ record.detailed_interpretation | truncate(100, True, '...') }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <p class="text-center text-gray-600 dark:text-gray-300">Aucune prédiction n'a encore été enregistrée.</p>
+    {% endif %}
+
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const cardViewBtn = document.getElementById('card-view-btn');
+        const tableViewBtn = document.getElementById('table-view-btn');
+        const cardView = document.getElementById('card-view');
+        const tableView = document.getElementById('table-view');
+
+        function showCardView() {
+            cardView.classList.remove('hidden');
+            tableView.classList.add('hidden');
+            cardViewBtn.classList.remove('bg-gray-200', 'text-gray-800');
+            cardViewBtn.classList.add('bg-orange-600', 'text-white');
+            tableViewBtn.classList.remove('bg-orange-600', 'text-white');
+            tableViewBtn.classList.add('bg-gray-200', 'text-gray-800');
+        }
+
+        function showTableView() {
+            tableView.classList.remove('hidden');
+            cardView.classList.add('hidden');
+            tableViewBtn.classList.remove('bg-gray-200', 'text-gray-800');
+            tableViewBtn.classList.add('bg-orange-600', 'text-white');
+            cardViewBtn.classList.remove('bg-orange-600', 'text-white');
+            cardViewBtn.classList.add('bg-gray-200', 'text-gray-800');
+        }
+
+        cardViewBtn.addEventListener('click', showCardView);
+        tableViewBtn.addEventListener('click', showTableView);
+
+        // Show card view by default on load
+        showCardView();
+    });
+</script>
+{% endblock %}
